@@ -194,6 +194,20 @@ impl Future for FetchFuture {
   但最终生成的机器码和精心手写的 C 一样精简。
 ]
 
+== 练习
+
+#note[
+  *题目位置*：`exercises/src/ch08_enum.rs`
+
+  *任务*：实现 `call_draw` 函数——通过 vtable（虚函数表）调用 trait 方法。这是 `&dyn Trait` 动态分发的底层机制，和 C++ 的虚函数调用完全相同。
+
+  *验证*：`cd exercises && cargo test ch08`
+
+  *答案参考*：`exercises/answers/ch08_enum.rs`
+]
+
+提示：fat pointer 的后 8 字节是指向 vtable 的指针；解引用 vtable 得到函数指针表，第一个槽位就是第一个 trait 方法。用 `unsafe` 块调用原始函数指针。
+
 == 小结
 
 - enum = tagged union（tag + union 的内存布局）

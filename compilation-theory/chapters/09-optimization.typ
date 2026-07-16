@@ -138,6 +138,20 @@ rust2mlog 中的 MLOG 编译器目前几乎是*零优化*的——直接从 AST 
 
 MLOG 优化器和 x86 优化器使用的是同一种理论——只需要适配指令集。
 
+== 练习
+
+#note[
+  *题目位置*：`exercises/src/ch09_optimize.rs`
+
+  *任务*：实现 `constant_fold` 函数，遍历 TAC 指令序列，将所有两个操作数都是常量的 `BinOp` 指令折叠为 `Copy` 指令。
+
+  *验证*：`cd exercises && cargo test ch09`
+
+  *答案参考*：`exercises/answers/ch09_optimize.rs`
+]
+
+提示：只需匹配 `Tac::BinOp { result, op, lhs: Value::Int(l), rhs: Value::Int(r) }` 模式，计算折叠结果，生成 `Tac::Copy { result, value: Value::Int(folded) }`。其他指令原样保留。
+
 == 小结
 
 - 优化的原则：不改变语义，改善性能

@@ -167,6 +167,20 @@ mov dword [rbp-4], 20     ; p.y = 20  (offset +4)
 
 在 x86 编译器中，步骤 3-4 还需要寄存器分配（第五章）。在 MLOG 编译器中不需要——MLOG 变量无限制。
 
+== 练习
+
+#note[
+  *题目位置*：`exercises/src/ch02_expr.rs`
+
+  *任务*：实现 `lower_expr_impl` 函数，将嵌套表达式树递归转换为三地址码序列。
+
+  *验证*：`cd exercises && cargo test ch02`
+
+  *答案参考*：`exercises/answers/ch02_expr.rs`
+]
+
+提示：递归处理是最简单的思路——Int 和 Var 不需要生成指令，直接返回对应的 Value；BinOp 先递归处理左右子树，再为当前运算生成临时变量和 BinOp 指令。
+
 == 小结
 
 - C 表达式是嵌套树，汇编是扁平序列

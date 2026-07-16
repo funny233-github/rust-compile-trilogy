@@ -219,6 +219,20 @@ __skip:
 
 CFG 是编译器分析和优化的基础数据结构。数据流分析、死代码消除、循环检测——全部建立在 CFG 上。
 
+== 练习
+
+#note[
+  *题目位置*：`exercises/src/ch03_control.rs`
+
+  *任务*：实现 `compile_if_else` 函数，将 if-else 结构转换为带标签和条件跳转的 TAC 序列。
+
+  *验证*：`cd exercises && cargo test ch03`
+
+  *答案参考*：`exercises/answers/ch03_control.rs`
+]
+
+提示：if-then 需要一条 `IfGoto`（条件为假时跳到 end）; if-else 需要一条 `IfGoto`（跳到 else）和一条无条件 `Jump`（then 结束后跳到 end）。标签名用 `label_base` 做前缀确保唯一。
+
 == 小结
 
 - if/while/for 全部归结为 cmp + 条件跳转 + 无条件跳转

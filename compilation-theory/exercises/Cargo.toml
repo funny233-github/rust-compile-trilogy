@@ -1,0 +1,8 @@
+[package]
+name = "compilation-theory-exercises"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "exercises"
+path = "src/lib.rs"

@@ -114,6 +114,20 @@ MLOG 没有物理寄存器限制。每个 MLOG 变量相当于一个虚拟寄存
   以及为什么 MLOG 编译器的设计可以如此简洁。
 ]
 
+== 练习
+
+#note[
+  *题目位置*：`exercises/src/ch05_regalloc.rs`
+
+  *任务*：实现 `linear_scan` 函数，使用线性扫描算法将活跃区间分配给有限的物理寄存器。当寄存器不足时，将寿命最短的变量溢出到内存。
+
+  *验证*：`cd exercises && cargo test ch05`
+
+  *答案参考*：`exercises/answers/ch05_regalloc.rs`
+]
+
+提示：按 start 排序后遍历，维护 `active` 列表（已分配的区间）和 `free_regs`（空闲寄存器）。关键决策在寄存器用完时：比较当前区间和最晚结束的已分配区间的 end 值，溢出 end 较小的那个。
+
 == 小结
 
 - 寄存器分配 = 无限虚拟 → 有限物理的映射

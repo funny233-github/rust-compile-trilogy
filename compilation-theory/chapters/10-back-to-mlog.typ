@@ -112,6 +112,20 @@ MLOG 作为编译目标有几个独特的教学优势：
 
 这就是为什么用 MLOG 来学习编译器设计比用 x86 容易得多——它去掉了最复杂的两块（寄存器分配和指令选择），同时保留了编译器的核心骨架。
 
+== 练习
+
+#note[
+  *题目位置*：`exercises/src/ch10_mlog.rs`
+
+  *任务*：实现 `tac_to_mlog` 函数——将三地址码 IR 翻译为 MLOG 文本指令。这就是 rust2mlog 代码生成器后端的核心逻辑。
+
+  *验证*：`cd exercises && cargo test ch10`
+
+  *答案参考*：`exercises/answers/ch10_mlog.rs`
+]
+
+提示：BinOp → `"op <opcode> <result> <lhs> <rhs>"`；Copy → `"set <result> <value>"`；Label 加冒号前缀；Jump 和 IfGoto 分别映射到 MLOG 的 jump 指令。操作码映射：Add→add, Sub→sub, Mul→mul, Div→div。
+
 == 小结
 
 - MLOG 和 x86 编译器共享相同的 IR 层
