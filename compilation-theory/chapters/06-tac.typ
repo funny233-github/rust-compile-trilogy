@@ -25,13 +25,18 @@
 
 四种基本指令类型：
 
-| 类型 | 形式 | 示例 |
-|:---|:---|:---|
-| 二元运算 | `x = y op z` | `t1 = a + b` |
-| 一元运算 | `x = op y` | `t2 = -t1` |
-| 复制 | `x = y` | `t3 = b` |
-| 条件跳转 | `if x op y goto L` | `if t1 < 10 goto loop` |
-| 无条件跳转 | `goto L` | `goto end` |
+#table(
+  columns: (auto, auto, auto),
+  fill: (rgb("#e5e7eb"),),
+  inset: 6pt,
+  stroke: 0.5pt,
+  [*类型*], [*形式*], [*示例*],
+  [二元运算], [`x = y op z`], [`t1 = a + b`],
+  [一元运算], [`x = op y`], [`t2 = -t1`],
+  [复制], [`x = y`], [`t3 = b`],
+  [条件跳转], [`if x op y goto L`], [`if t1 < 10 goto loop`],
+  [无条件跳转], [`goto L`], [`goto end`],
+)
 
 这恰好是 MLOG 的 `op` + `set` + `jump` 指令族——MLOG 天然就是三地址码。
 
@@ -113,11 +118,16 @@ LLVM IR 就是 SSA 形式的三地址码。
 
 == MLOG 和 x86 在三地址码下的统一
 
-| | x86 | MLOG |
-|:---|:---|:---|
-| 二元运算 | `add rax, rbx`（二地址） | `op add result a b`（三地址） |
-| 赋值 | `mov rax, 5` | `set result 5` |
-| 条件跳转 | `cmp a, b; je label`（两步） | `jump label equal a b`（一步） |
+#table(
+  columns: (auto, auto, auto),
+  fill: (rgb("#e5e7eb"),),
+  inset: 6pt,
+  stroke: 0.5pt,
+  [], [*x86*], [*MLOG*],
+  [二元运算], [`add rax, rbx`（二地址）], [`op add result a b`（三地址）],
+  [赋值], [`mov rax, 5`], [`set result 5`],
+  [条件跳转], [`cmp a, b; je label`（两步）], [`jump label equal a b`（一步）],
+)
 
 从三地址码视角看，x86 的二地址指令只是语法差异——每条 x86 指令可以规范化为三地址形式。MLOG 本身就是三地址码。
 

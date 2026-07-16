@@ -166,19 +166,24 @@ impl Future for FetchFuture {
 
 == 所有 Rust 构造的汇编归宿
 
-| Rust 构造 | 汇编表示 |
-|:---|:---|
-| `enum` | tag + union |
-| `match` | cmp + jmp / 跳转表 |
-| `Option<T>` | niche 优化后可能是 null |
-| 闭包（无捕获） | 函数指针 |
-| 闭包（捕获） | struct + 函数调用 |
-| trait object | fat pointer + vtable |
-| `async fn` | 状态机 enum |
-| `.await` | 状态机的 poll 方法 |
-| `Box<T>` | 指针（和 C `malloc` 一样） |
-| `&T` | 指针 |
-| `Vec<T>` | ptr + len + cap（3 个字段） |
+#table(
+  columns: (auto, auto),
+  fill: (rgb("#e5e7eb"),),
+  inset: 6pt,
+  stroke: 0.5pt,
+  [*Rust 构造*], [*汇编表示*],
+  [`enum`], [tag + union],
+  [`match`], [cmp + jmp / 跳转表],
+  [`Option<T>`], [niche 优化后可能是 null],
+  [闭包（无捕获）], [函数指针],
+  [闭包（捕获）], [struct + 函数调用],
+  [trait object], [fat pointer + vtable],
+  [`async fn`], [状态机 enum],
+  [`.await`], [状态机的 poll 方法],
+  [`Box<T>`], [指针（和 C `malloc` 一样）],
+  [`&T`], [指针],
+  [`Vec<T>`], [ptr + len + cap（3 个字段）],
+)
 
 所有高级抽象最终都变成：mov、add、cmp、jmp、call、ret。
 

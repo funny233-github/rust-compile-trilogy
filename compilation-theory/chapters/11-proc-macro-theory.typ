@@ -38,25 +38,35 @@ pub fn mlog(input: TokenStream) -> TokenStream {
 
 == 和传统编译器的对比
 
-| 方面 | 传统编译器 (gcc/llc) | 过程宏编译器 |
-|:---|:---|:---|
-| 运行时机 | 构建时（独立进程） | 构建时（编译器进程内） |
-| 输入 | 文件路径 | TokenStream |
-| 输出 | .o / .s 文件 | TokenStream |
-| 集成 | 需要构建系统配置 | 自动（cargo） |
-| 错误报告 | stderr + 退出码 | `syn::Error` → 编译错误 |
-| 使用方式 | 命令行 | 宏调用 |
+#table(
+  columns: (auto, auto, auto),
+  fill: (rgb("#e5e7eb"),),
+  inset: 6pt,
+  stroke: 0.5pt,
+  [*方面*], [*传统编译器 (gcc/llc)*], [*过程宏编译器*],
+  [运行时机], [构建时（独立进程）], [构建时（编译器进程内）],
+  [输入], [文件路径], [TokenStream],
+  [输出], [.o / .s 文件], [TokenStream],
+  [集成], [需要构建系统配置], [自动（cargo）],
+  [错误报告], [stderr + 退出码], [`syn::Error` → 编译错误],
+  [使用方式], [命令行], [宏调用],
+)
 
 过程宏*不是*独立编译器——它是嵌入在 Rust 编译器中的翻译函数。这让它和宿主语言有更紧密的集成，但也限制了它的独立性。
 
 == 适合放过程宏的场景
 
-| 适合 | 不适合 |
-|:---|:---|
-| 代码生成（Builder、Serialize） | 大型独立编译（>10K 行） |
-| 内嵌 DSL（SQL、HTML、MLOG） | 需要独立二进制工具链 |
-| 编译时验证（正则、格式串） | 非常复杂的优化 pass |
-| 协议/配置编译 | 需要跨语言共享的 |
+#table(
+  columns: (auto, auto),
+  fill: (rgb("#e5e7eb"),),
+  inset: 6pt,
+  stroke: 0.5pt,
+  [*适合*], [*不适合*],
+  [代码生成（Builder、Serialize）], [大型独立编译（>10K 行）],
+  [内嵌 DSL（SQL、HTML、MLOG）], [需要独立二进制工具链],
+  [编译时验证（正则、格式串）], [非常复杂的优化 pass],
+  [协议/配置编译], [需要跨语言共享的],
+)
 
 #intuition[
   判断标准：*生成的代码是否需要和宿主 Rust 代码紧密集成？*
