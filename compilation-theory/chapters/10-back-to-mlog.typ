@@ -115,7 +115,7 @@ MLOG 作为编译目标有几个独特的教学优势：
 == 练习
 
 #note[
-  *题目位置*：`exercises/src/ch10_mlog.rs`
+  *题目位置*：`exercises/src/ch11_mlog.rs`
 
   *任务*：实现 `tac_to_mlog` 函数，把三地址码 IR 翻译为 MLOG 文本——这就是 rust2mlog 代码生成器后端的核心逻辑。
 
@@ -130,9 +130,9 @@ MLOG 作为编译目标有几个独特的教学优势：
   - `Jump` → `"jump <label> always"`
   - `IfGoto` → `"jump <label> equal <cond> false"`
 
-  *验证*：`cd exercises && cargo test ch10`
+  *验证*：`cd exercises && cargo test ch11`
 
-  *答案*：`exercises/answers/ch10_mlog.rs`
+  *答案*：`exercises/answers/ch11_mlog.rs`
 ]
 
 == 小结

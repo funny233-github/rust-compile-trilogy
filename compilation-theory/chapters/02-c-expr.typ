@@ -170,7 +170,7 @@ mov dword [rbp-4], 20     ; p.y = 20  (offset +4)
 == 练习
 
 #note[
-  *题目位置*：`exercises/src/ch02_expr.rs`
+  *题目位置*：`exercises/src/ch03_expr.rs`
 
   *任务*：实现 `lower_expr_impl` 函数，把嵌套表达式树递归转换为三地址码序列。
 
@@ -184,9 +184,9 @@ mov dword [rbp-4], 20     ; p.y = 20  (offset +4)
 
   提示：`Int` 和 `Var` 不需生成指令，直接返回对应的 `Value`；`BinOp` 先递归处理左右子树，再生成临时变量名（`"t0"`, `"t1"`...），最后 emit 一条 `Tac::BinOp`。
 
-  *验证*：`cd exercises && cargo test ch02`
+  *验证*：`cd exercises && cargo test ch03`
 
-  *答案*：`exercises/answers/ch02_expr.rs`
+  *答案*：`exercises/answers/ch03_expr.rs`
 ]
 
 == 小结

@@ -117,7 +117,7 @@ MLOG 没有物理寄存器限制。每个 MLOG 变量相当于一个虚拟寄存
 == 练习
 
 #note[
-  *题目位置*：`exercises/src/ch05_regalloc.rs`
+  *题目位置*：`exercises/src/ch06_regalloc.rs`
 
   *任务*：实现 `linear_scan` 函数，用线性扫描算法把活跃区间映射到 K 个物理寄存器。
 
@@ -127,9 +127,9 @@ MLOG 没有物理寄存器限制。每个 MLOG 变量相当于一个虚拟寄存
 
   提示：按 start 排序后遍历。维护 `active`（已分配区间+寄存器）和 `free_regs`。寄存器用完时，比较当前区间和最晚结束的已分配区间的 end——溢出 end 较小的那个。
 
-  *验证*：`cd exercises && cargo test ch05`
+  *验证*：`cd exercises && cargo test ch06`
 
-  *答案*：`exercises/answers/ch05_regalloc.rs`
+  *答案*：`exercises/answers/ch06_regalloc.rs`
 ]
 
 == 小结

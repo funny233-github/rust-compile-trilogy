@@ -197,7 +197,7 @@ impl Future for FetchFuture {
 == 练习
 
 #note[
-  *题目位置*：`exercises/src/ch08_enum.rs`
+  *题目位置*：`exercises/src/ch09_enum.rs`
 
   *任务*：实现 `call_draw` 函数，通过 vtable 调用 trait 方法——这是 `&dyn Trait` 动态分发的底层机制。
 
@@ -207,9 +207,9 @@ impl Future for FetchFuture {
 
   提示：`unsafe { let vt = &*fp.vtable; (vt.draw)(fp.data); }`。这 3 行代码就是 C++ 虚函数调用和 Rust trait object 方法调用的全部汇编逻辑。
 
-  *验证*：`cd exercises && cargo test ch08`
+  *验证*：`cd exercises && cargo test ch09`
 
-  *答案*：`exercises/answers/ch08_enum.rs`
+  *答案*：`exercises/answers/ch09_enum.rs`
 ]
 
 == 小结

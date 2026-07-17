@@ -58,10 +58,10 @@ pub struct LiveInterval {
     pub end: usize,   // 最后使用的指令索引
 }
 
-pub mod ch02_expr;
-pub mod ch03_control;
-pub mod ch04_func;
-pub mod ch05_regalloc;
-pub mod ch08_enum;
-pub mod ch09_optimize;
-pub mod ch10_mlog;
+pub mod ch03_expr;
+pub mod ch04_control;
+pub mod ch05_func;
+pub mod ch06_regalloc;
+pub mod ch09_enum;
+pub mod ch10_optimize;
+pub mod ch11_mlog;
