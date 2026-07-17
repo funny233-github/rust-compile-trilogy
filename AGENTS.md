@@ -37,6 +37,20 @@
    cd compilation-theory && typst compile main.typ
    ```
 
+6. **answers/ 中的参考答案必须能编译通过。** 每次添加或修改答案后：
+   ```bash
+   cd compilation-theory/exercises
+   cp answers/chXX_xxx.rs src/   # 临时替换
+   cargo test chXX               # 测试必须全部通过
+   git checkout src/             # 恢复 stub
+   ```
+   不得提交编译失败或测试不通过的答案。
+
+7. **lib.rs 必须写好文档。** 共享数据结构是用户面对的第一份代码：
+   - 每个 `pub` 类型/函数必须有 `///` 文档注释
+   - 文档要简洁——一句话说清它是什么
+   - 必要时用 `/// ```` ` 给出一个使用示例——让用户一眼看懂这个类型怎么构造
+
 ### 为什么要这样做
 
 这些练习的目的是让读者亲手实现编译器核心算法。答案泄露会毁掉学习效果。agent 的职责是维护练习框架的正确性，而不是替用户做题。
