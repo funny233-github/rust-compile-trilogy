@@ -1,4 +1,7 @@
 // Reference answer: linear scan register allocation
+//
+// Standard algorithm (Poletto 1999): spill whichever interval
+// has the SMALLER end — shorter remaining life = cheaper spill.
 use crate::LiveInterval;
 use std::collections::HashMap;
 
@@ -33,16 +36,17 @@ pub fn linear_scan(intervals: &[LiveInterval], k: usize) -> HashMap<String, Opti
                 .map(|(idx, _)| idx)
                 .unwrap();
 
-            let (ref furthest_var, furthest_reg) = active[furthest_idx];
+            let furthest_end = active[furthest_idx].0.end;
 
-            if furthest_var.end > i.end {
-                // Steal register from the longer-lived one
-                result.insert(furthest_var.var.clone(), None);
-                result.insert(i.var.clone(), Some(furthest_reg));
-                active[furthest_idx] = (i.clone(), furthest_reg);
-            } else {
-                // Current interval lives longer → spill it
+            if furthest_end > i.end {
+                // Current is shorter-lived → spill current (cheaper)
                 result.insert(i.var.clone(), None);
+            } else {
+                // Current lives longer → steal register from the shorter-lived active
+                let (ref stolen_var, stolen_reg) = active[furthest_idx];
+                result.insert(stolen_var.var.clone(), None);
+                result.insert(i.var.clone(), Some(stolen_reg));
+                active[furthest_idx] = (i.clone(), stolen_reg);
             }
         }
     }

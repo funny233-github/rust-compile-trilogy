@@ -108,7 +108,7 @@ MLOG 没有物理寄存器限制。每个 MLOG 变量相当于一个虚拟寄存
 
   你要返回：`a→reg0, b→reg1, c→None`（c 溢出——它和 a/b 都重叠，但寿命最短）
 
-  提示：按 start 排序后遍历。维护 `active`（已分配区间+寄存器）和 `free_regs`。寄存器用完时，找到 active 中 end 最大的那个——谁的寿命更长就溢出谁，把寄存器让给当前区间。
+  提示：按 start 排序后遍历。维护 `active`（已分配区间+寄存器）和 `free_regs`。寄存器用完时，找到 active 中 end 最大的那个——溢出 end 较小的那个（寿命更短，spill 代价更小）。
 
   *验证*：`cd exercises && cargo test ch06`
 
