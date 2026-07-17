@@ -20,9 +20,10 @@
    | `03-c-control.typ` | 第 4 章 | `ch04_control` | `cargo test ch04` |
    | `04-c-func.typ` | 第 5 章 | `ch05_func` | `cargo test ch05` |
    | `05-regalloc.typ` | 第 6 章 | `ch06_regalloc` | `cargo test ch06` |
-   | `08-rust-specific.typ` | 第 9 章 | `ch09_enum` | `cargo test ch09` |
-   | `09-optimization.typ` | 第 10 章 | `ch10_optimize` | `cargo test ch10` |
-   | `10-back-to-mlog.typ` | 第 11 章 | `ch11_mlog` | `cargo test ch11` |
+   | `06-graph-color.typ` | 第 7 章 | `ch07_graph` | `cargo test ch07` |
+   | `09-rust-specific.typ` | 第 10 章 | `ch10_enum` | `cargo test ch10` |
+   | `10-optimization.typ` | 第 11 章 | `ch11_optimize` | `cargo test ch11` |
+   | `11-back-to-mlog.typ` | 第 12 章 | `ch12_mlog` | `cargo test ch12` |
 
 3. **每次操作练习后必须验证：**
    ```bash
