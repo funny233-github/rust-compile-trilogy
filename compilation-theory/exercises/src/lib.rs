@@ -1,13 +1,13 @@
-// 共享数据结构 — 所有练习共用
+// Shared data structures for all exercises.
 //
-// 这些类型是编译器 IR（三地址码）的核心数据结构，
-// 贯穿 ch03 到 ch11 的所有练习。
+// These types form the compiler IR (three-address code) used
+// throughout exercises ch03 through ch11.
 
-/// 值：整数常量或变量名。
+/// A value: either a compile-time integer constant or a variable name.
 ///
 /// ```
-/// Value::Int(42)       // 编译期常量
-/// Value::Var("t0")     // 临时变量 / 用户变量
+/// Value::Int(42)       // compile-time constant
+/// Value::Var("t0")     // temporary or user variable
 /// ```
 #[derive(Debug, Clone, PartialEq)]
 pub enum Value {
@@ -15,13 +15,13 @@ pub enum Value {
     Var(String),
 }
 
-/// 二元运算。
+/// A binary operator.
 ///
 /// ```
 /// BinOp::Add  →  +
 /// BinOp::Sub  →  -
 /// BinOp::Mul  →  *
-/// BinOp::Div  →  /  (整数除法)
+/// BinOp::Div  →  /  (integer division)
 /// ```
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum BinOp {
@@ -31,10 +31,10 @@ pub enum BinOp {
     Div,
 }
 
-/// 三地址码指令。
+/// A three-address code instruction.
 ///
-/// 每条指令最多三个操作数：result = lhs op rhs。
-/// 这是编译器中所有分析和优化的基本单位。
+/// At most three operands: `result = lhs op rhs`.
+/// This is the basic unit of all compiler analysis and optimization.
 ///
 /// ```
 /// // t0 = a + b
@@ -49,7 +49,7 @@ pub enum BinOp {
 /// // if x == 0 goto done
 /// Tac::IfGoto { cond: Value::Var("x"), label: "done" }
 ///
-/// // 标签
+/// // label definition
 /// Tac::Label("done")
 /// ```
 #[derive(Debug, Clone, PartialEq)]
@@ -73,11 +73,11 @@ pub enum Tac {
         cond: Value,
         label: String,
     },
-    /// 跳转目标标签
+    /// A jump target label
     Label(String),
 }
 
-/// 表达式树节点（ch03 用）。
+/// An expression tree node (used in ch03).
 ///
 /// ```
 /// // 1 + 2
@@ -93,19 +93,19 @@ pub enum Expr {
     BinOp(Box<Expr>, BinOp, Box<Expr>),
 }
 
-/// 活跃区间（ch06 寄存器分配用）。
+/// A live interval for register allocation (used in ch06).
 ///
 /// ```
-/// // 变量 a 在指令 0 处定义，最后在指令 3 处被使用
+/// // Variable "a" is defined at instruction 0 and last used at instruction 3
 /// LiveInterval { var: "a", start: 0, end: 3 }
 /// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct LiveInterval {
-    /// 变量名
+    /// Variable name
     pub var: String,
-    /// 定义点（指令索引）
+    /// Definition point (instruction index)
     pub start: usize,
-    /// 最后使用点（指令索引）
+    /// Last use point (instruction index)
     pub end: usize,
 }
 
