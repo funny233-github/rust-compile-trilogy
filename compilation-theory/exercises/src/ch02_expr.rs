@@ -27,23 +27,45 @@ pub fn lower_expr(expr: &Expr) -> (Vec<Tac>, Value) {
     (instrs, result)
 }
 
-fn lower_expr_impl(_expr: &Expr, _instrs: &mut Vec<Tac>, _counter: &mut u32) -> Value {
-    todo!("实现表达式树 → 三地址码")
+fn lower_expr_impl(expr: &Expr, instrs: &mut Vec<Tac>, counter: &mut u32) -> Value {
+    match expr {
+        Expr::Int(value) => Value::Int(*value),
+        Expr::Var(value) => Value::Var(value.clone()),
+        Expr::BinOp(expr1, op, expr2) => {
+            let lhs = lower_expr_impl(expr1, instrs, counter);
+            let rhs = lower_expr_impl(expr2, instrs, counter);
+            instrs.push(Tac::BinOp {
+                result: "t".to_string() + &counter.to_string(),
+                op: *op,
+                lhs,
+                rhs,
+            });
+            let result = "t".to_string() + &counter.to_string();
+            *counter += 1;
+            Value::Var(result)
+        }
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::Expr::*;
     use crate::BinOp::*;
+    use crate::Expr::*;
 
     #[test]
     fn test_simple_add() {
         let tree = Expr::BinOp(Box::new(Var("a".into())), Add, Box::new(Var("b".into())));
         let (code, result) = lower_expr(&tree);
-        assert_eq!(code, vec![
-            Tac::BinOp { result: "t0".into(), op: Add, lhs: Value::Var("a".into()), rhs: Value::Var("b".into()) }
-        ]);
+        assert_eq!(
+            code,
+            vec![Tac::BinOp {
+                result: "t0".into(),
+                op: Add,
+                lhs: Value::Var("a".into()),
+                rhs: Value::Var("b".into())
+            }]
+        );
         assert_eq!(result, Value::Var("t0".into()));
     }
 
@@ -51,13 +73,27 @@ mod tests {
     fn test_nested_expr() {
         let tree = Expr::BinOp(
             Box::new(Expr::BinOp(Box::new(Int(1)), Add, Box::new(Int(2)))),
-            Mul, Box::new(Int(3)),
+            Mul,
+            Box::new(Int(3)),
         );
         let (code, result) = lower_expr(&tree);
-        assert_eq!(code, vec![
-            Tac::BinOp { result: "t0".into(), op: Add, lhs: Value::Int(1), rhs: Value::Int(2) },
-            Tac::BinOp { result: "t1".into(), op: Mul, lhs: Value::Var("t0".into()), rhs: Value::Int(3) },
-        ]);
+        assert_eq!(
+            code,
+            vec![
+                Tac::BinOp {
+                    result: "t0".into(),
+                    op: Add,
+                    lhs: Value::Int(1),
+                    rhs: Value::Int(2)
+                },
+                Tac::BinOp {
+                    result: "t1".into(),
+                    op: Mul,
+                    lhs: Value::Var("t0".into()),
+                    rhs: Value::Int(3)
+                },
+            ]
+        );
         assert_eq!(result, Value::Var("t1".into()));
     }
 
