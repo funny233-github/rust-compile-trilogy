@@ -1,18 +1,8 @@
-// 练习 5：线性扫描寄存器分配
-// ============================================================
-//
-// 用线性扫描算法把无限虚拟寄存器映射到 K 个物理寄存器。
-//
-// 算法：按 start 排序后逐个处理，维护 active 列表和 free_regs 池。
-// 寄存器用完时，溢出 end 较小的那个区间。
-//
-// ============================================================
-
 use crate::LiveInterval;
 use std::collections::HashMap;
 
 pub fn linear_scan(_intervals: &[LiveInterval], _k: usize) -> HashMap<String, Option<usize>> {
-    todo!("实现线性扫描寄存器分配")
+    todo!("implement linear scan register allocation")
 }
 
 #[cfg(test)]
@@ -42,7 +32,7 @@ mod tests {
     }
 
     #[test]
-    fn test_spill() {
+    fn test_spill_shortest() {
         let intervals = vec![
             LiveInterval { var: "a".into(), start: 0, end: 5 },
             LiveInterval { var: "b".into(), start: 1, end: 4 },
@@ -52,5 +42,18 @@ mod tests {
         assert!(result["a"].is_some());
         assert!(result["b"].is_some());
         assert_eq!(result["c"], None);
+    }
+
+    #[test]
+    fn test_steal_register() {
+        let intervals = vec![
+            LiveInterval { var: "a".into(), start: 0, end: 10 },
+            LiveInterval { var: "b".into(), start: 1, end: 9 },
+            LiveInterval { var: "c".into(), start: 2, end: 8 },
+        ];
+        let result = linear_scan(&intervals, 2);
+        assert_eq!(result["a"], None);
+        assert!(result["b"].is_some());
+        assert!(result["c"].is_some());
     }
 }

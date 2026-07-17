@@ -1,4 +1,4 @@
-// 参考答案：线性扫描寄存器分配
+// Reference answer: linear scan register allocation
 use crate::LiveInterval;
 use std::collections::HashMap;
 
@@ -6,12 +6,12 @@ pub fn linear_scan(intervals: &[LiveInterval], k: usize) -> HashMap<String, Opti
     let mut sorted = intervals.to_vec();
     sorted.sort_by_key(|i| i.start);
 
-    let mut active: Vec<(LiveInterval, usize)> = Vec::new(); // (区间, 分配的寄存器)
+    let mut active: Vec<(LiveInterval, usize)> = Vec::new();
     let mut free_regs: Vec<usize> = (0..k).collect();
     let mut result = HashMap::new();
 
     for i in &sorted {
-        // 释放已结束的区间
+        // Expire dead intervals
         active.retain(|(a, reg)| {
             if a.end < i.start {
                 free_regs.push(*reg);
@@ -22,25 +22,26 @@ pub fn linear_scan(intervals: &[LiveInterval], k: usize) -> HashMap<String, Opti
         });
 
         if let Some(reg) = free_regs.pop() {
-            // 有空闲寄存器 → 直接分配
             result.insert(i.var.clone(), Some(reg));
             active.push((i.clone(), reg));
         } else {
-            // 全部占用 → 找最晚结束者
-            let (idx, &(ref furthest, _)) = active
+            // All registers taken — find the furthest-ending active interval
+            let furthest_idx = active
                 .iter()
                 .enumerate()
                 .max_by_key(|(_, (a, _))| a.end)
+                .map(|(idx, _)| idx)
                 .unwrap();
 
-            if furthest.end > i.end {
-                // 溢出最晚结束者，把它的寄存器给 i
-                let stolen_reg = active[idx].1;
-                result.insert(furthest.var.clone(), None);
-                result.insert(i.var.clone(), Some(stolen_reg));
-                active[idx] = (i.clone(), stolen_reg);
+            let (ref furthest_var, furthest_reg) = active[furthest_idx];
+
+            if furthest_var.end > i.end {
+                // Steal register from the longer-lived one
+                result.insert(furthest_var.var.clone(), None);
+                result.insert(i.var.clone(), Some(furthest_reg));
+                active[furthest_idx] = (i.clone(), furthest_reg);
             } else {
-                // 溢出当前区间
+                // Current interval lives longer → spill it
                 result.insert(i.var.clone(), None);
             }
         }
