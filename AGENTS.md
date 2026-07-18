@@ -27,7 +27,7 @@
 
 3. **每次操作练习后必须验证：**
    ```bash
-   cd compilation-theory/exercises && cargo test 2>&1 | grep 'test result'
+   cd compilation-theory/exercises && cargo fmt && cargo test 2>&1 | grep 'test result'
    ```
    输出必须是 `0 passed; N failed`（全部 stub，无一泄露答案）。
 
