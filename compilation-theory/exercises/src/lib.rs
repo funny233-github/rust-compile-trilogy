@@ -62,17 +62,11 @@ pub enum Tac {
         rhs: Value,
     },
     /// `result = value`
-    Copy {
-        result: String,
-        value: Value,
-    },
+    Copy { result: String, value: Value },
     /// `goto label`
     Jump(String),
     /// `if cond == 0 goto label`
-    IfGoto {
-        cond: Value,
-        label: String,
-    },
+    IfGoto { cond: Value, label: String },
     /// A jump target label
     Label(String),
 }

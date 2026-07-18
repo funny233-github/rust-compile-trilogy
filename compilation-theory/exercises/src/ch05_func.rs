@@ -58,10 +58,7 @@ mod tests {
         // b: 8 字节 → rbp-12
         let locals = vec![("a".into(), 4), ("b".into(), 8)];
         let result = stack_offsets(&locals);
-        assert_eq!(result, vec![
-            ("a".into(), -4),
-            ("b".into(), -12),
-        ]);
+        assert_eq!(result, vec![("a".into(), -4), ("b".into(), -12),]);
     }
 
     #[test]
@@ -71,10 +68,9 @@ mod tests {
         // z: 1 字节 → rbp-9  (char)
         let locals = vec![("x".into(), 4), ("y".into(), 4), ("z".into(), 1)];
         let result = stack_offsets(&locals);
-        assert_eq!(result, vec![
-            ("x".into(), -4),
-            ("y".into(), -8),
-            ("z".into(), -9),
-        ]);
+        assert_eq!(
+            result,
+            vec![("x".into(), -4), ("y".into(), -8), ("z".into(), -9),]
+        );
     }
 }

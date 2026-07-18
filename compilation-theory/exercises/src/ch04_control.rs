@@ -36,32 +36,62 @@ mod tests {
     fn test_if_then() {
         let ir = IfElse {
             cond: "x".into(),
-            then_body: vec![Copy { result: "y".into(), value: Value::Int(1) }],
+            then_body: vec![Copy {
+                result: "y".into(),
+                value: Value::Int(1),
+            }],
             else_body: None,
         };
         let code = compile_if_else(ir, "test");
-        assert_eq!(code, vec![
-            IfGoto { cond: Value::Var("x".into()), label: "L_test_end".into() },
-            Copy { result: "y".into(), value: Value::Int(1) },
-            Label("L_test_end".into()),
-        ]);
+        assert_eq!(
+            code,
+            vec![
+                IfGoto {
+                    cond: Value::Var("x".into()),
+                    label: "L_test_end".into()
+                },
+                Copy {
+                    result: "y".into(),
+                    value: Value::Int(1)
+                },
+                Label("L_test_end".into()),
+            ]
+        );
     }
 
     #[test]
     fn test_if_else() {
         let ir = IfElse {
             cond: "x".into(),
-            then_body: vec![Copy { result: "y".into(), value: Value::Int(1) }],
-            else_body: Some(vec![Copy { result: "y".into(), value: Value::Int(-1) }]),
+            then_body: vec![Copy {
+                result: "y".into(),
+                value: Value::Int(1),
+            }],
+            else_body: Some(vec![Copy {
+                result: "y".into(),
+                value: Value::Int(-1),
+            }]),
         };
         let code = compile_if_else(ir, "test");
-        assert_eq!(code, vec![
-            IfGoto { cond: Value::Var("x".into()), label: "L_test_else".into() },
-            Copy { result: "y".into(), value: Value::Int(1) },
-            Jump("L_test_end".into()),
-            Label("L_test_else".into()),
-            Copy { result: "y".into(), value: Value::Int(-1) },
-            Label("L_test_end".into()),
-        ]);
+        assert_eq!(
+            code,
+            vec![
+                IfGoto {
+                    cond: Value::Var("x".into()),
+                    label: "L_test_else".into()
+                },
+                Copy {
+                    result: "y".into(),
+                    value: Value::Int(1)
+                },
+                Jump("L_test_end".into()),
+                Label("L_test_else".into()),
+                Copy {
+                    result: "y".into(),
+                    value: Value::Int(-1)
+                },
+                Label("L_test_end".into()),
+            ]
+        );
     }
 }

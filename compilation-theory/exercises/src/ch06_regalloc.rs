@@ -12,8 +12,16 @@ mod tests {
     #[test]
     fn test_no_overlap() {
         let intervals = vec![
-            LiveInterval { var: "a".into(), start: 0, end: 1 },
-            LiveInterval { var: "b".into(), start: 2, end: 3 },
+            LiveInterval {
+                var: "a".into(),
+                start: 0,
+                end: 1,
+            },
+            LiveInterval {
+                var: "b".into(),
+                start: 2,
+                end: 3,
+            },
         ];
         let result = linear_scan(&intervals, 1);
         assert_eq!(result["a"], Some(0));
@@ -23,8 +31,16 @@ mod tests {
     #[test]
     fn test_overlap_2regs() {
         let intervals = vec![
-            LiveInterval { var: "a".into(), start: 0, end: 2 },
-            LiveInterval { var: "b".into(), start: 1, end: 3 },
+            LiveInterval {
+                var: "a".into(),
+                start: 0,
+                end: 2,
+            },
+            LiveInterval {
+                var: "b".into(),
+                start: 1,
+                end: 3,
+            },
         ];
         let result = linear_scan(&intervals, 2);
         assert_eq!(result["a"], Some(0));
@@ -34,9 +50,21 @@ mod tests {
     #[test]
     fn test_spill_shortest() {
         let intervals = vec![
-            LiveInterval { var: "a".into(), start: 0, end: 5 },
-            LiveInterval { var: "b".into(), start: 1, end: 4 },
-            LiveInterval { var: "c".into(), start: 2, end: 3 },
+            LiveInterval {
+                var: "a".into(),
+                start: 0,
+                end: 5,
+            },
+            LiveInterval {
+                var: "b".into(),
+                start: 1,
+                end: 4,
+            },
+            LiveInterval {
+                var: "c".into(),
+                start: 2,
+                end: 3,
+            },
         ];
         let result = linear_scan(&intervals, 2);
         assert!(result["a"].is_some());
@@ -47,9 +75,21 @@ mod tests {
     #[test]
     fn test_steal_register() {
         let intervals = vec![
-            LiveInterval { var: "a".into(), start: 0, end: 10 },
-            LiveInterval { var: "b".into(), start: 1, end: 9 },
-            LiveInterval { var: "c".into(), start: 2, end: 8 },
+            LiveInterval {
+                var: "a".into(),
+                start: 0,
+                end: 10,
+            },
+            LiveInterval {
+                var: "b".into(),
+                start: 1,
+                end: 9,
+            },
+            LiveInterval {
+                var: "c".into(),
+                start: 2,
+                end: 8,
+            },
         ];
         let result = linear_scan(&intervals, 2);
         assert_eq!(result["a"], None);

@@ -29,34 +29,54 @@ mod tests {
 
     #[test]
     fn test_binop() {
-        let code = vec![BinOp { result: "t0".into(), op: crate::BinOp::Add, lhs: Int(1), rhs: Int(2) }];
+        let code = vec![BinOp {
+            result: "t0".into(),
+            op: crate::BinOp::Add,
+            lhs: Int(1),
+            rhs: Int(2),
+        }];
         let mlog = tac_to_mlog(&code);
         assert_eq!(mlog, vec!["op add t0 1 2"]);
     }
     #[test]
     fn test_copy() {
-        let code = vec![Copy { result: "y".into(), value: Int(42) }];
+        let code = vec![Copy {
+            result: "y".into(),
+            value: Int(42),
+        }];
         let mlog = tac_to_mlog(&code);
         assert_eq!(mlog, vec!["set y 42"]);
     }
     #[test]
     fn test_if_else_pattern() {
         let code = vec![
-            IfGoto { cond: Var("x".into()), label: "else".into() },
-            Copy { result: "y".into(), value: Int(1) },
+            IfGoto {
+                cond: Var("x".into()),
+                label: "else".into(),
+            },
+            Copy {
+                result: "y".into(),
+                value: Int(1),
+            },
             Jump("end".into()),
             Label("else".into()),
-            Copy { result: "y".into(), value: Int(-1) },
+            Copy {
+                result: "y".into(),
+                value: Int(-1),
+            },
             Label("end".into()),
         ];
         let mlog = tac_to_mlog(&code);
-        assert_eq!(mlog, vec![
-            "jump else equal x false",
-            "set y 1",
-            "jump end always",
-            ":else",
-            "set y -1",
-            ":end",
-        ]);
+        assert_eq!(
+            mlog,
+            vec![
+                "jump else equal x false",
+                "set y 1",
+                "jump end always",
+                ":else",
+                "set y -1",
+                ":end",
+            ]
+        );
     }
 }
